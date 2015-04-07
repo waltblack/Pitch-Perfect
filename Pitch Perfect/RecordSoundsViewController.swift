@@ -11,8 +11,8 @@ import AVFoundation
 
 class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
 
-    var audioRecorder:AVAudioRecorder!
-    var recordedAudio:RecordAudio!
+    var audioRecorder: AVAudioRecorder!
+    var recordedAudio: RecordAudio!
     let tapMessage = "Tap to Record"
     
     @IBOutlet weak var microphoneButton: UIButton!
@@ -45,7 +45,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         stopButton.hidden = false
         recordLabel.text = "Recording"
         
-        microphoneButton.hidden = true
+        microphoneButton.enabled = false
         //Inside func recordAudio(sender: UIButton)
         let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
         
@@ -83,11 +83,15 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
             //Move to the next seque
             self.performSegueWithIdentifier("stopRecording", sender: recordedAudio)
         }
+        else{
+            //TODO: put an else clause here
+            println("The file did not load correctly.")
+        }
     }
     
     @IBAction func stopRecording(sender: UIButton) {
         //Stop recording the user's voice
-        microphoneButton.hidden = false
+        microphoneButton.enabled = true
         recordLabel.hidden = false
         recordLabel.text = tapMessage
         stopButton.hidden = true
